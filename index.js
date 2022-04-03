@@ -40,7 +40,7 @@ app.get('/info', (req, res) => {
     res.send(info)
 })
 
-app.get('/api/notes/:id', (request, response) => {
+app.get('/api/persons/:id', (request, response) => {
     const id = Number(request.params.id)
     const note = persons.find(note => note.id === id)
     if (note) {
