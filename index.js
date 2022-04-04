@@ -61,9 +61,28 @@ app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })
 
-app.post('/api/notes', (request, response) => {
-    const note = request.body
-    console.log(note)
+const generateId = () => {
+    const maxId = persons.length > 0 ? Math.floor(Math.random() * 100000) : 0
+    return maxId + 1
+}
+
+app.post('/api/persons', (request, response) => {
+    const body = request.body
+
+    if (!body.content) {
+        return response.status(400).json({ 
+        error: 'content missing' 
+        })
+    }
+
+    const note = {
+        id: generateId(),
+        name: body.name,
+        number: body.number
+    }
+
+    persons = persons.concat(note)
+
     response.json(note)
 })
 
