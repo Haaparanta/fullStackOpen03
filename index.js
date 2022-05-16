@@ -1,4 +1,5 @@
 const express = require('express')
+const morgan = require('morgan')
 const app = express()
 app.use(express.json())
 
@@ -24,6 +25,18 @@ let persons = [
     number: '39-23-6423122',
   }
 ]
+
+morgan.token('post', (req, res) => {
+    if (req.method === 'POST') {
+        return JSON.stringify(req.body)
+    } else {
+        return ''
+    }
+})
+
+morgan.format('postFormat', ':method :url :status :res[content-length] - :response-time ms :post')
+
+app.use(morgan('postFormat'))
 
 app.get('/', (req, res) => {
     res.send('<h1>Hello World!</h1>')
